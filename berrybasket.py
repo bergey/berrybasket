@@ -16,10 +16,13 @@ spi.open(0,0)
 channel_photoR = 0
 channel_thermR = 1
 
+# Cosm credentials
+# TODO move into separate file
 API_KEY = '33AIUxH1xC38tTBSPjQL3n9LileSAKxaZktlL1pwdldCST0g'
 API_URL = 84597
 pac = eeml.Cosm(API_URL, API_KEY)
 
+# init local CSV logging
 if os.path.exists("LabPiJackCosm.csv"):
     logfile = open("LabPiJackCosm.csv", "ab")
     logwriter = csv.writer(logfile)
@@ -28,12 +31,17 @@ else:
     logwriter = csv.writer(logfile)
     logwriter.writerow(['Timestamp', 'Photoresistor (Ohms)', 'Thermistor (Celsius)'])
 
+# adc_value range specific to MCP3008 (or 3004)
 def RfromMCP(adc_value, R0=10000):
-    """V_{ADC} = V_+ \frac{R_0}{R_S+R_0}
+    """Assumes that sensor is connected to MCP's Vref,
+    and matched resistor is connected to ground.
+    V_{ADC} = V_+ \frac{R_0}{R_S+R_0}
     R_S = R_0 \(\frac{V_+}{V_{ADC}}-1\)
     adc_value = 1023 \frac{V_{ADC}}{V_+}"""
     return R0*(1023.0/adc_value -1)
 
+# specific to thermistor used
+# TODO document which thermistor this is for
 def K_thermistorR(R):
     Rref = 12000
     A1 = 3.354E-3
@@ -45,12 +53,13 @@ def K_thermistorR(R):
   
     return 1/(A1 + B1*lnR + C1*lnR**2 + D1*lnR**3)
 
+# specific to thermistor used
 def C_thermistorR(R):
     """returns Temperature in degrees °C,
-    given Resistance R in Ohms"""
-  
+given Resistance R in Ohms"""
     return K_thermistorR(R) - 273.25
 
+# unit classes for Cosm API
 class Volt(eeml.Unit):
     def __init__(self):
         eeml.Unit.__init__(self, 'Volt', 'basicSI', 'V')
@@ -59,6 +68,7 @@ class Ohm(eeml.Unit):
     def __init__(self):
         eeml.Unit.__init__(self, 'Volt', 'basicSI', u'Ω')
 
+# from https://github.com/jerbly/Pi/blob/master/raspi-adc-pot.py
 def readadc(adcnum):
     """read channel ADCNUM of the MCP3008 chip"""
     if ((adcnum > 7) or (adcnum < 0)):
@@ -74,8 +84,10 @@ while True:
     raw_thermR = readadc(channel_thermR)
     thermR = RfromMCP(raw_thermR)
     thermC = C_thermistorR(thermR)
+    # build eeml structure
     pac.update([eeml.Data('Photoresistor', photoR, unit=Ohm()), eeml.Data('Thermistor', thermC, unit=eeml.Celsius())])
     try:
+        # talk to Cosm server
         pac.put()
     except:
         print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M pac.put() failed'))
