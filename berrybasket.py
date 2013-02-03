@@ -1,19 +1,24 @@
 # -*- encoding: UTF-8
 
-# Basic script to read data from AIN0 and AIN2 on the LabJack and publish it to Cosm
+# Basic script to read sensors  on the RasPi SPI bus
+# using MCP3008 ADC and publish it to Cosm
 # Written by Daniel Bergey & Christalee Bieber
 
-import eeml, serial, time, u3, datetime, csv, os
+import eeml, serial, time, datetime, csv, os
+import spidev
 from math import log
+
+# init SPI
+spi = spidev.SpiDev()
+spi.open(0,0)
+
+# channel specifics
+channel_photoR = 0
+channel_thermR = 1
 
 API_KEY = '33AIUxH1xC38tTBSPjQL3n9LileSAKxaZktlL1pwdldCST0g'
 API_URL = 84597
 pac = eeml.Cosm(API_URL, API_KEY)
-
-d = u3.U3()
-AIN0 = 0
-AIN1 = 2
-AIN2 = 4
 
 if os.path.exists("LabPiJackCosm.csv"):
     logfile = open("LabPiJackCosm.csv", "ab")
@@ -23,13 +28,12 @@ else:
     logwriter = csv.writer(logfile)
     logwriter.writerow(['Timestamp', 'Photoresistor (Ohms)', 'Thermistor (Celsius)'])
 
-def RfromV(V, V0=5, R0=10000):
-    """V in Volts, V0 in Volts, R0 in Ohms,
-    assuming R0 is between AIN and V0,
-    R to be returned is between AIN and Gnd"""
-  
-    return (V*R0) / (V0 - V)
-  
+def RfromMCP(adc_value, R0=10000):
+    """V_{ADC} = V_+ \frac{R_0}{R_S+R_0}
+    R_S = R_0 \(\frac{V_+}{V_{ADC}}-1\)
+    adc_value = 1023 \frac{V_{ADC}}{V_+}"""
+    return R0*(1023.0/adc_value -1)
+
 def K_thermistorR(R):
     Rref = 12000
     A1 = 3.354E-3
@@ -55,15 +59,26 @@ class Ohm(eeml.Unit):
     def __init__(self):
         eeml.Unit.__init__(self, 'Volt', 'basicSI', u'Ω')
 
+def readadc(adcnum):
+    """read channel ADCNUM of the MCP3008 chip"""
+    if ((adcnum > 7) or (adcnum < 0)):
+        return -1
+    r = spi.xfer2([1,(8+adcnum)<<4,0])
+    adcout = ((r[1]&3) << 8) + r[2]
+    return adcout
+
 while True:
-    V0 = d.readRegister(AIN1)
-    photoR = RfromV(d.readRegister(AIN0), V0)
-    thermR = C_thermistorR(RfromV(d.readRegister(AIN2), V0))
-    pac.update([eeml.Data('Photoresistor', photoR, unit=Ohm()), eeml.Data('Thermistor', thermR, unit=eeml.Celsius())])
+    # seperate these calls for debugging
+    raw_photoR = readadc(channel_photoR)
+    photoR = RfromMCP(raw_photoR)
+    raw_thermR = readadc(channel_thermR)
+    thermR = RfromMCP(raw_thermR)
+    thermC = C_thermistorR(thermR)
+    pac.update([eeml.Data('Photoresistor', photoR, unit=Ohm()), eeml.Data('Thermistor', thermC, unit=eeml.Celsius())])
     try:
 	pac.put()
     except:
 	print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M pac.put() failed'))
-    logwriter.writerow([datetime.datetime.now().strftime('%Y-%m-%d %H:%M'), photoR, thermR])
-    time.sleep(600)
+    logwriter.writerow([datetime.datetime.now().strftime('%Y-%m-%d %H:%M'), photoR, thermC])
+    time.sleep(10)
 
