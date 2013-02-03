@@ -91,5 +91,5 @@ while True:
         pac.put()
     except:
         print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M pac.put() failed'))
-    logwriter.writerow([datetime.datetime.now().strftime('%Y-%m-%d %H:%M'), photoR, thermC])
+    logwriter.writerow([datetime.datetime.now().strftime('%Y-%m-%d %H:%M'), "{0:.1f}".format(photoR), "{0:.1f}".format(thermC)])
     time.sleep(10)
