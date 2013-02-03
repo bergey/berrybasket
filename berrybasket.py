@@ -23,7 +23,7 @@ pac = eeml.Cosm(API_URL, API_KEY)
 if os.path.exists("LabPiJackCosm.csv"):
     logfile = open("LabPiJackCosm.csv", "ab")
     logwriter = csv.writer(logfile)
-else: 
+else:
     logfile = open("LabPiJackCosm.csv", "wb")
     logwriter = csv.writer(logfile)
     logwriter.writerow(['Timestamp', 'Photoresistor (Ohms)', 'Thermistor (Celsius)'])
@@ -44,7 +44,7 @@ def K_thermistorR(R):
     lnR = log(R/Rref)
   
     return 1/(A1 + B1*lnR + C1*lnR**2 + D1*lnR**3)
-  
+
 def C_thermistorR(R):
     """returns Temperature in degrees °C,
     given Resistance R in Ohms"""
@@ -54,7 +54,7 @@ def C_thermistorR(R):
 class Volt(eeml.Unit):
     def __init__(self):
         eeml.Unit.__init__(self, 'Volt', 'basicSI', 'V')
-  
+
 class Ohm(eeml.Unit):
     def __init__(self):
         eeml.Unit.__init__(self, 'Volt', 'basicSI', u'Ω')
@@ -76,9 +76,8 @@ while True:
     thermC = C_thermistorR(thermR)
     pac.update([eeml.Data('Photoresistor', photoR, unit=Ohm()), eeml.Data('Thermistor', thermC, unit=eeml.Celsius())])
     try:
-	pac.put()
+        pac.put()
     except:
-	print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M pac.put() failed'))
+        print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M pac.put() failed'))
     logwriter.writerow([datetime.datetime.now().strftime('%Y-%m-%d %H:%M'), photoR, thermC])
     time.sleep(10)
-
