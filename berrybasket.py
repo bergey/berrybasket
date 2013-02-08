@@ -77,19 +77,20 @@ def readadc(adcnum):
     adcout = ((r[1]&3) << 8) + r[2]
     return adcout
 
-while True:
-    # seperate these calls for debugging
-    raw_photoR = readadc(channel_photoR)
-    photoR = RfromMCP(raw_photoR)
-    raw_thermR = readadc(channel_thermR)
-    thermR = RfromMCP(raw_thermR)
-    thermC = C_thermistorR(thermR)
-    # build eeml structure
-    pac.update([eeml.Data('Photoresistor', photoR, unit=Ohm()), eeml.Data('Thermistor', thermC, unit=eeml.Celsius())])
-    try:
-        # talk to Cosm server
-        pac.put()
-    except:
-        print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M pac.put() failed'))
-    logwriter.writerow([datetime.datetime.now().strftime('%Y-%m-%d %H:%M'), "{0:.1f}".format(photoR), "{0:.1f}".format(thermC)])
-    time.sleep(10)
+if __name__=="__main__":
+    while True:
+        # seperate these calls for debugging
+        raw_photoR = readadc(channel_photoR)
+        photoR = RfromMCP(raw_photoR)
+        raw_thermR = readadc(channel_thermR)
+        thermR = RfromMCP(raw_thermR)
+        thermC = C_thermistorR(thermR)
+        # build eeml structure
+        pac.update([eeml.Data('Photoresistor', photoR, unit=Ohm()), eeml.Data('Thermistor', thermC, unit=eeml.Celsius())])
+        try:
+            # talk to Cosm server
+            pac.put()
+        except:
+            print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M pac.put() failed'))
+        logwriter.writerow([datetime.datetime.now().strftime('%Y-%m-%d %H:%M'), "{0:.1f}".format(photoR), "{0:.1f}".format(thermC)])
+        time.sleep(10)
