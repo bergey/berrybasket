@@ -10,8 +10,10 @@ from math import log
 import json
 
 # init SPI
-spi = spidev.SpiDev()
-spi.open(0,0)
+chip0 = spidev.SpiDev()
+chip0.open(0,0)
+chip1 = spidev.SpiDev()
+chip1.open(0,1)
 
 # channel specifics
 channel_photoR = 0
@@ -70,11 +72,11 @@ class Ohm(eeml.Unit):
         eeml.Unit.__init__(self, 'Volt', 'basicSI', u'Ω')
 
 # from https://github.com/jerbly/Pi/blob/master/raspi-adc-pot.py
-def readadc(adcnum):
+def readadc(chip, channel):
     """read channel ADCNUM of the MCP3008 chip"""
-    if ((adcnum > 7) or (adcnum < 0)):
+    if ((channel > 7) or (channel < 0)):
         return -1
-    r = spi.xfer2([1,(8+adcnum)<<4,0])
+    r = chip.xfer2([1,(8+channel)<<4,0])
     adcout = ((r[1]&3) << 8) + r[2]
     return adcout
 
