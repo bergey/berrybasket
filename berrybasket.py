@@ -7,6 +7,7 @@
 import eeml, serial, time, datetime, csv, os
 import spidev
 from math import log
+import json
 
 # init SPI
 spi = spidev.SpiDev()
@@ -17,9 +18,9 @@ channel_photoR = 0
 channel_thermR = 1
 
 # Cosm credentials
-# TODO move into separate file
-API_KEY = '33AIUxH1xC38tTBSPjQL3n9LileSAKxaZktlL1pwdldCST0g'
-API_URL = 84597
+config = json.loads(open('config.json').read())
+API_KEY = config['API_KEY']
+API_URL = config['API_URL']
 pac = eeml.Cosm(API_URL, API_KEY)
 
 # init local CSV logging
