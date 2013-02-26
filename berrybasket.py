@@ -15,10 +15,6 @@ chip0.open(0,0)
 chip1 = spidev.SpiDev()
 chip1.open(0,1)
 
-# channel specifics
-channel_photoR = 0
-channel_thermR = 1
-
 # Cosm credentials
 config = json.loads(open('config.json').read())
 API_KEY = config['API_KEY']
@@ -26,13 +22,13 @@ API_URL = config['API_URL']
 pac = eeml.Cosm(API_URL, API_KEY)
 
 # init local CSV logging
-if os.path.exists("LabPiJackCosm.csv"):
-    logfile = open("LabPiJackCosm.csv", "ab")
+if os.path.exists("berrybasket.csv"):
+    logfile = open("berrybasket.csv", "ab")
     logwriter = csv.writer(logfile)
 else:
-    logfile = open("LabPiJackCosm.csv", "wb")
+    logfile = open("berrybasket.csv", "wb")
     logwriter = csv.writer(logfile)
-    logwriter.writerow(['Timestamp', 'Photoresistor (Ohms)', 'Thermistor (Celsius)'])
+    logwriter.writerow(['Timestamp', 'Channel 0 (Celsius)', 'Channel 1', 'Channel 2', 'Channel 3', 'Channel 4', 'Channel 5', 'Channel 6', 'Channel 7', 'Channel 8', 'Channel 9', 'Channel 10', 'Channel 11', 'Channel 12', 'Channel 13', 'Channel 14', 'Channel 15'])
 
 # adc_value range specific to MCP3008 (or 3004)
 def RfromMCP(adc_value, R0=10000):
@@ -41,7 +37,10 @@ def RfromMCP(adc_value, R0=10000):
     V_{ADC} = V_+ \frac{R_0}{R_S+R_0}
     R_S = R_0 \(\frac{V_+}{V_{ADC}}-1\)
     adc_value = 1023 \frac{V_{ADC}}{V_+}"""
-    return R0*(1023.0/adc_value -1)
+    if adc_value==0:
+        return 2000*R0
+    else:
+        return R0*(1023.0/adc_value -1)
 
 # specific to thermistor used
 # TODO document which thermistor this is for
@@ -51,8 +50,9 @@ def K_thermistorR(R):
     B1 = 2.744E-4
     C1 = 3.667E-6
     D1 = 1.375E-7
-  
-    lnR = log(R/Rref)
+
+    epsilon = 1e-5
+    lnR = log((R+epsilon)/Rref)
   
     return 1/(A1 + B1*lnR + C1*lnR**2 + D1*lnR**3)
 
@@ -82,18 +82,20 @@ def readadc(chip, channel):
 
 if __name__=="__main__":
     while True:
-        # seperate these calls for debugging
-        raw_photoR = readadc(channel_photoR)
-        photoR = RfromMCP(raw_photoR)
-        raw_thermR = readadc(channel_thermR)
-        thermR = RfromMCP(raw_thermR)
-        thermC = C_thermistorR(thermR)
-        # build eeml structure
-        pac.update([eeml.Data('Photoresistor', photoR, unit=Ohm()), eeml.Data('Thermistor', thermC, unit=eeml.Celsius())])
+        thermlog = [datetime.datetime.now().strftime('%Y-%m-%d %H:%M')]
+        for chnum, chip in enumerate((chip0, chip1)):
+            for channel in xrange(8):
+                # seperate these calls for debugging
+                raw_thermR = readadc(chip, channel)
+                thermR = RfromMCP(raw_thermR)
+                thermC = C_thermistorR(thermR)
+                thermlog.append("{0:.1f}".format(thermC))
+                # build eeml structure
+                pac.update([eeml.Data(chnum*8 + channel, thermC, unit=eeml.Celsius())])
         try:
             # talk to Cosm server
             pac.put()
         except:
             print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M pac.put() failed'))
-        logwriter.writerow([datetime.datetime.now().strftime('%Y-%m-%d %H:%M'), "{0:.1f}".format(photoR), "{0:.1f}".format(thermC)])
+        logwriter.writerow(thermlog)
         time.sleep(10)
