@@ -1,0 +1,209 @@
+EESchema Schematic File Version 2
+LIBS:raspberrypi-gpio-cache
+LIBS:atmel
+LIBS:transistors
+LIBS:ac-dc
+LIBS:adc-dac
+LIBS:analog_switches
+LIBS:conn
+LIBS:contrib
+LIBS:dc-dc
+LIBS:device
+LIBS:interface
+LIBS:linear
+LIBS:microcontrollers
+LIBS:opto
+LIBS:power
+LIBS:references
+LIBS:regul
+LIBS:relays
+LIBS:sensors
+LIBS:transf
+LIBS:valves
+LIBS:MCP3008
+EELAYER 27 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date "15 aug 2013"
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L CONN_13X2 P0
+U 1 1 52095A07
+P 4800 2000
+F 0 "P0" H 4800 2700 60  0000 C CNN
+F 1 "CONN_13X2" V 4800 2000 50  0000 C CNN
+F 2 "" H 4800 2000 60  0000 C CNN
+F 3 "" H 4800 2000 60  0000 C CNN
+	1    4800 2000
+	1    0    0    -1  
+$EndComp
+$Comp
+L MCP3008 U1
+U 1 1 520965C3
+P 7150 3750
+F 0 "U1" H 7150 3650 50  0000 C CNN
+F 1 "MCP3008" H 7150 3850 50  0000 C CNN
+F 2 "MODULE" H 7150 3750 50  0001 C CNN
+F 3 "DOCUMENTATION" H 7150 3750 50  0001 C CNN
+	1    7150 3750
+	0    -1   -1   0   
+$EndComp
+$Comp
+L MCP3008 U0
+U 1 1 5209657A
+P 5750 3750
+F 0 "U0" H 5750 3650 50  0000 C CNN
+F 1 "MCP3008" H 5750 3850 50  0000 C CNN
+F 2 "MODULE" H 5750 3750 50  0001 C CNN
+F 3 "DOCUMENTATION" H 5750 3750 50  0001 C CNN
+	1    5750 3750
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	5400 1500 5400 3000
+Wire Wire Line
+	5500 1500 5500 3000
+Wire Wire Line
+	5600 1600 5600 3000
+Wire Wire Line
+	7000 1600 7000 3000
+Wire Wire Line
+	7500 1600 7500 3000
+Wire Wire Line
+	6800 1500 6800 3000
+Wire Wire Line
+	6900 1500 6900 3000
+Wire Wire Line
+	7400 2500 7400 3000
+Wire Wire Line
+	6000 2600 6000 3000
+Wire Wire Line
+	7100 2900 7100 3000
+Wire Wire Line
+	5700 2900 5700 3000
+Wire Wire Line
+	5200 1500 8100 1500
+Connection ~ 6800 1500
+Connection ~ 5500 1500
+Connection ~ 5400 1500
+Connection ~ 7000 1600
+Connection ~ 5600 1600
+Connection ~ 6100 1600
+Wire Wire Line
+	6100 3000 6100 1600
+Wire Wire Line
+	5200 2500 7400 2500
+Wire Wire Line
+	5200 2600 6000 2600
+Wire Wire Line
+	4400 2500 4350 2500
+Wire Wire Line
+	4350 2500 4350 2900
+Wire Wire Line
+	4350 2900 7100 2900
+Wire Wire Line
+	4400 2400 4250 2400
+Wire Wire Line
+	4250 2400 4250 2800
+Wire Wire Line
+	4250 2800 7200 2800
+Wire Wire Line
+	7200 2800 7200 3000
+Wire Wire Line
+	4400 2300 4150 2300
+Wire Wire Line
+	4150 2300 4150 2700
+Wire Wire Line
+	4150 2700 7300 2700
+Wire Wire Line
+	7300 2700 7300 3000
+Connection ~ 5700 2900
+Wire Wire Line
+	5800 3000 5800 2800
+Connection ~ 5800 2800
+Wire Wire Line
+	5900 3000 5900 2700
+Connection ~ 5900 2700
+Wire Wire Line
+	5200 1600 7900 1600
+$Comp
+L CONN_8 P3
+U 1 1 520C2EE5
+P 5750 4950
+F 0 "P3" V 5700 4950 60  0000 C CNN
+F 1 "CONN_8" V 5800 4950 60  0000 C CNN
+F 2 "~" H 5750 4950 60  0000 C CNN
+F 3 "~" H 5750 4950 60  0000 C CNN
+	1    5750 4950
+	0    1    1    0   
+$EndComp
+$Comp
+L CONN_8 P2
+U 1 1 520C2F0B
+P 7150 4950
+F 0 "P2" V 7100 4950 60  0000 C CNN
+F 1 "CONN_8" V 7200 4950 60  0000 C CNN
+F 2 "~" H 7150 4950 60  0000 C CNN
+F 3 "~" H 7150 4950 60  0000 C CNN
+	1    7150 4950
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	5400 4600 5400 4500
+Wire Wire Line
+	5500 4600 5500 4500
+Wire Wire Line
+	5600 4600 5600 4500
+Wire Wire Line
+	5700 4600 5700 4500
+Wire Wire Line
+	5800 4500 5800 4600
+Wire Wire Line
+	5900 4600 5900 4500
+Wire Wire Line
+	6000 4500 6000 4600
+Wire Wire Line
+	6100 4600 6100 4500
+Wire Wire Line
+	6800 4500 6800 4600
+Wire Wire Line
+	6900 4600 6900 4500
+Wire Wire Line
+	7000 4500 7000 4600
+Wire Wire Line
+	7100 4600 7100 4500
+Wire Wire Line
+	7200 4500 7200 4600
+Wire Wire Line
+	7300 4600 7300 4500
+Wire Wire Line
+	7400 4500 7400 4600
+Wire Wire Line
+	7500 4600 7500 4500
+$Comp
+L CONN_2 P1
+U 1 1 520C3205
+P 8000 4950
+F 0 "P1" V 7950 4950 40  0000 C CNN
+F 1 "CONN_2" V 8050 4950 40  0000 C CNN
+F 2 "~" H 8000 4950 60  0000 C CNN
+F 3 "~" H 8000 4950 60  0000 C CNN
+	1    8000 4950
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	7900 1600 7900 4600
+Connection ~ 7500 1600
+Wire Wire Line
+	8100 1500 8100 4600
+Connection ~ 6900 1500
+$EndSCHEMATC
