@@ -1,0 +1,4 @@
+{"API_KEY": "COSM API key is a long alphanumeric string",
+ "API_URL": COSM API url is an integer (in base 10),
+ "logfile": "filename of local csv file"
+}
