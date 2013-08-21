@@ -73,7 +73,8 @@ class Ohm(eeml.Unit):
 
 # from https://github.com/jerbly/Pi/blob/master/raspi-adc-pot.py
 def readadc(chip, channel):
-    """read channel ADCNUM of the MCP3008 chip"""
+    """read channel CHANNEL  of the MCP3008
+    CHIP should be an SpiDev object"""
     if ((channel > 7) or (channel < 0)):
         return -1
     r = chip.xfer2([1,(8+channel)<<4,0])
