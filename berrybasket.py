@@ -22,13 +22,15 @@ API_URL = config['API_URL']
 pac = eeml.Cosm(API_URL, API_KEY)
 
 # init local CSV logging
-if os.path.exists("berrybasket.csv"):
-    logfile = open("berrybasket.csv", "ab")
-    logwriter = csv.writer(logfile)
-else:
-    logfile = open("berrybasket.csv", "wb")
-    logwriter = csv.writer(logfile)
-    logwriter.writerow(['Timestamp', 'Channel 0 (Celsius)', 'Channel 1', 'Channel 2', 'Channel 3', 'Channel 4', 'Channel 5', 'Channel 6', 'Channel 7', 'Channel 8', 'Channel 9', 'Channel 10', 'Channel 11', 'Channel 12', 'Channel 13', 'Channel 14', 'Channel 15'])
+if 'logfile' in config:
+    logfilename = config['logfile']
+    if os.path.exists(logfilename):
+        logfile = open(logfilename, "ab")
+        logwriter = csv.writer(logfile)
+    else:
+        logfile = open(logfilename, "wb")
+        logwriter = csv.writer(logfile)
+        logwriter.writerow(['Timestamp', 'Channel 0 (Celsius)'] + ['Channel ' + str(n) for n in xrange(1,16)])
 
 # adc_value range specific to MCP3008 (or 3004)
 def RfromMCP(adc_value, R0=10000):
