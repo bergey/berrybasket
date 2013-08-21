@@ -15,11 +15,15 @@ chip0.open(0,0)
 chip1 = spidev.SpiDev()
 chip1.open(0,1)
 
-# Cosm credentials
 config = json.loads(open('config.json').read())
-API_KEY = config['API_KEY']
-API_URL = config['API_URL']
-pac = eeml.Cosm(API_URL, API_KEY)
+
+# Cosm credentials
+if 'cosm' in config:
+    API_KEY = config['cosm']['API_KEY']
+    API_URL = config['cosm']['API_URL']
+    pac = eeml.Cosm(API_URL, API_KEY)
+else:
+    pac = None
 
 # init local CSV logging
 if 'logfile' in config:
