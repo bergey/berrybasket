@@ -1,4 +1,4 @@
-update=Mon 12 Aug 2013 06:45:01 PM EDT
+update=Fri 23 Aug 2013 09:21:38 PM EDT
 version=1
 last_client=eeschema
 [cvpcb]
@@ -54,25 +54,7 @@ RptD_Y=100
 RptLab=1
 LabSize=60
 [eeschema/libraries]
-LibName1=raspberrypi-gpio/raspberrypi-gpio-cache
-LibName2=atmel
-LibName3=transistors
-LibName4=ac-dc
-LibName5=adc-dac
-LibName6=analog_switches
-LibName7=conn
-LibName8=contrib
-LibName9=dc-dc
-LibName10=device
-LibName11=interface
-LibName12=linear
-LibName13=microcontrollers
-LibName14=opto
-LibName15=power
-LibName16=references
-LibName17=regul
-LibName18=relays
-LibName19=sensors
-LibName20=transf
-LibName21=valves
-LibName22=MCP3008
+LibName1=conn
+LibName2=power
+LibName3=MCP3008
+LibName4=raspi-con
