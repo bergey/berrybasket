@@ -42,15 +42,21 @@ def RfromMCP(adc_value, R0=10000):
     and matched resistor is connected to ground.
     V_{ADC} = V_+ \frac{R_0}{R_S+R_0}
     R_S = R_0 \(\frac{V_+}{V_{ADC}}-1\)
-    adc_value = 1023 \frac{V_{ADC}}{V_+}"""
+    adc_value = 1023 \frac{V_{ADC}}{V_+}
+    adc_value can be 0 when the channel is not connected (floating)
+    We don't want to throw an exception in case other  channels are connected
+    adc_value < 1 implies R >> R0, so we make up such a value
+    It's high enough to indicate that it shouldn't be taken literally"""
     if adc_value==0:
         return 2000*R0
     else:
         return R0*(1023.0/adc_value -1)
 
 # specific to thermistor used
-# TODO document which thermistor this is for
 def K_thermistorR(R):
+    """K_thermistorR calculates the temperature in K of a
+    NTCLE100E3 thermistor with R=12kΩ at 25°C,
+    using equation and coefficients from the datasheet."""
     Rref = 12000
     A1 = 3.354E-3
     B1 = 2.744E-4
@@ -59,12 +65,12 @@ def K_thermistorR(R):
 
     epsilon = 1e-5
     lnR = log((R+epsilon)/Rref)
-  
+
     return 1/(A1 + B1*lnR + C1*lnR**2 + D1*lnR**3)
 
 # specific to thermistor used
 def C_thermistorR(R):
-    """returns Temperature in degrees °C,
+    """returns Temperature in degrees Celsius (°C),
 given Resistance R in Ohms"""
     return K_thermistorR(R) - 273.25
 
