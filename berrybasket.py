@@ -89,26 +89,29 @@ def readadc(chip, channel):
 
 if __name__=="__main__":
     while True:
+        # read all the channels
         readings = []
-        for chnum, chip in enumerate((chip0, chip1)):
+        for chip in (chip0, chip1):
             for channel in xrange(8):
                 # seperate these calls for debugging
                 raw_thermR = readadc(chip, channel)
                 thermR = RfromMCP(raw_thermR)
                 thermC = C_thermistorR(thermR)
                 readings.append(thermC)
-                if pac:
-                    # build Cosmeeml structure
-                    pac.update([eeml.Data(chnum*8 + channel, thermC, unit=eeml.Celsius())])
+
         if pac:
+            for chnum, t in enumerate(readings): # build Cosm eeml structure
+                pac.update([eeml.Data(chnum, t, unit=eeml.Celsius())])
             try:
                 # talk to Cosm server
                 pac.put()
             except:
                 print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M pac.put() failed'))
+
         if logwriter: # CSV log
             thermlog = [datetime.datetime.now().strftime('%Y-%m-%d %H:%M')]
             for r in readings:
                 thermlog.append("{0:.1f}".format(r))
             logwriter.writerow(thermlog)
+
         time.sleep(10)
