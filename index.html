@@ -89,25 +89,72 @@ Sign up for Cosm account, create a new feed, fill in the blanks in config.json. 
 
 <h1>
 <a name="hardware" class="anchor" href="#hardware"><span class="octicon octicon-link"></span></a>Hardware</h1>
+<div>
 <img src="images/assembling.jpg" width=400 />
 
 <p>We're using the MCP3008 chip to convert analog measurements to digital.  The pins down one side of the chip are analog inputs; the other side connect to the computer.  The <a href="http://jeremyblythe.blogspot.com/2012/09/raspberry-pi-hardware-spi-analog-inputs.html">aforementioned blog post</a> has good pictures of which pins go to which Raspberry Pi connections. <a href="http://github.com/bergey/berrybasket/tree/master/adc board">Our schematic (below)</a> shows wiring up two ADC chips.  </p>
 
-<img src="https://raw.github.com/bergey/berrybasket/master/adc board/berrybasket adc schematic.svg" />
+<table>
+  <thead>
+    <tr class="header">
+      <th align="left">Function</th>
+      <th align="left">Part #</th>
+      <th align="left">Manufacturer</th>
+      <th align="left">Vendor Link</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="odd">
+      <td align="left">Analog Digital Converter</td>
+      <td align="left">MCP3008</td>
+      <td align="left">Microchip</td>
+      <td align="left"><a href="http://www.digikey.com/product-detail/en/MCP3008-I%2FP/MCP3008-I%2FP-ND/319422">DigiKey</a></td>
+    </tr>
+    <tr class="even">
+      <td align="left">Single Board Computer</td>
+      <td align="left">RasPi Model B</td>
+      <td align="left">Raspberry Pi</td>
+      <td align="left"><a href="https://www.adafruit.com/products/998">Adafruit</a></td>
+    </tr>
+    <tr class="odd">
+      <td align="left">Screw Terminal</td>
+      <td align="left">282834-4</td>
+      <td align="left">TE Connectivity</td>
+      <td align="left"><a href="http://www.digikey.com/product-detail/en/282834-4/A98335-ND/1153265">DigiKey</a></td>
+    </tr>
+    <tr class="even">
+      <td align="left">RasPi Perma-Proto</td>
+      <td align="left">1135</td>
+      <td align="left">Adafruit</td>
+      <td align="left"><a href="https://www.adafruit.com/products/1135">Adafruit</a></td>
+    </tr>
+    <tr class="odd">
+      <td align="left">13x2-pin ribbon cable</td>
+      <td align="left">862</td>
+      <td align="left">Adafruit</td>
+      <td align="left"><a href="https://www.adafruit.com/products/862">Adafruit</a></td>
+    </tr>
+    <tr class="even">
+      <td align="left">or RasPi T-Cobbler for prototyping</td>
+      <td align="left">1105</td>
+      <td align="left">Adafruit</td>
+      <td align="left"><a href="https://www.adafruit.com/products/1105">Adafruit</a></td>
+    </tr>
+  </tbody>
+</table>
 
-<p>The <a href="http://adafruit.com/products/1105">Pi T-Cobbler breakout board</a> from <a href="http://adafruit.com/">Adafruit</a> is a great help in connecting the Raspberry Pi to a breadboard.  Adafruit also sells the <a href="http://adafruit.com/products/856">MCP3008</a>.</p>
-
-
-
+      </div>
 <h1>
 <a name="todo" class="anchor" href="#todo"><span class="octicon octicon-link"></span></a>Future Work</h1>
 
 <ul>
-<li>Allow measurement frequency to be specified in config file</li>
-<li>Specify channels to log in config file</li>
-<li>Add examples with specific sensors (thermistor, photoresistor)</li>
-<li>Add support for <a href="https://thingspeak.com/">Thingspeak</a></li>
-<li>Add support for <a href="http://www.nimbits.com/">Nimbits</a></li>
+  <li>Allow measurement frequency to be specified in config file</li>
+  <li>Specify channels to log in config file</li>
+  <li>Add examples with specific sensors (thermistor, photoresistor)</li>
+  <li>Add support for <a href="https://thingspeak.com/">Thingspeak</a></li>
+  <li>Add support for <a href="http://www.nimbits.com/">Nimbits</a></li>
+  <li>Make it easier to use other sensors; Factor out thermistor-specific code.</li>
+  <li>Make it easy to specify different sensors on different channels</li>
 </ul>
 
 <h1>
