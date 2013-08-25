@@ -30,50 +30,89 @@
 
       </header>
       <section>
-        <p>Documentation for Raspberry Pi/MCP3008/Cosm datalogging project</p>
+
+        <p>We teach about circuits, sensors, programming, and data
+        visualization at our local hackerspace. To reach a wider
+        audience, we are introducing open hardware in a nearby public
+        school. Our project integrated with a unit on solar energy,
+        where students build cardboard houses with features to reject
+        or retain heat. </p>
+
+        <p>We built an Internet-connected datalogger for use by about
+        60 students in the 5th & 6th grade science classes, measuring
+        temperature in 14 houses over 5 days. We installed the houses
+        & sensors on the school roof, showed students the hardware &
+        software involved, and facilitated class discussion & graphing
+        of the data. Each class looked at the performance of their
+        houses and discussed patterns caused by weather, daylight
+        hours, and mass & window treatments of the houses.</p>
+
+        <p>This website documents the hardware, software, and what we did in the school.</p>
+
+<ul>
+  <li><a href="#software">Software</a></li>
+  <li><a href="#hardware">Hardware</a></li>
+  <li><a href="#todo">Future Work</a></li>
+  <li><a href="#classroom">Educational Connections</a></li>
+</ul>
+
+If you find some part of this useful for any purpose, we'd love to hear about it!  Reach us at <a href="mailto:bergey@thehacktory.org">&lt;bergey@thehacktory.org&gt;</a>.  If you have trouble making it work, let us know.
 
 <h1>
-<a name="install" class="anchor" href="#install"><span class="octicon octicon-link"></span></a>Install</h1>
+<a name="software" class="anchor" href="#software"><span class="octicon octicon-link"></span></a>Software</h1>
 
 <ol>
-<li>Install <a href="http://learn.adafruit.com/adafruit-raspberry-pi-educational-linux-distro">Adafruit Occidentalis</a> 0.2 on Raspberry Pi</li>
-<li>Plug RasPi into router, log into router to find IP address, ssh into RasPi</li>
-<li>Install python SPI library.  We learned to do this from <a href="http://jeremyblythe.blogspot.com/2012/09/raspberry-pi-hardware-spi-analog-inputs.html">this blog post</a>
+<li>Install <a href="http://learn.adafruit.com/adafruit-raspberry-pi-educational-linux-distro">Adafruit Occidentalis</a> 0.2 on your Raspberry Pi.</li>
+<li>Plug the RasPi into your router, log into the router to find its IP address, and ssh into RasPi.</li>
+<li>Install the python SPI library.  (Details from <a href="http://jeremyblythe.blogspot.com/2012/09/raspberry-pi-hardware-spi-analog-inputs.html">this blog post</a>):
 <pre><code>git clone git://github.com/doceme/py-spidev
 cd py-spidev
 sudo python setup.py install
 </code></pre>
 </li>
-<li>Download and install python packages for the Cosm API
-
-<pre><code>git clone git://github.com/petervizi/python-eeml
+<li>Download and install python packages for the Cosm API:
+  <pre><code>git clone git://github.com/petervizi/python-eeml
 </code></pre>
 </li>
 <li>
-  Download this script:
+  Download the berrybasket logging script:
   <pre><code>git clone git://github.com/bergey/berrybasket.git</code></pre>
 </li>
 <li>
-Sign up for Cosm account, create a new feed, fill in the blanks in config.json:
+Sign up for Cosm account, create a new feed, fill in the blanks in config.json.  config.json has several sections, one for each supported online data aggregator, currently just "cosm", and one for the CSV, "logfile".  You can leave out any section that you don't plan to use.  For Cosm, the required fields are:
 <ul>
   <li>API_KEY</li>
 
   <li>API_URL appears in the URL of the feed webpage.  It's the number in http://cosm.com/feeds/84597</li>
+
 </ul></li></ol>
 
 <h1>
-<a name="hardware-setup" class="anchor" href="#hardware-setup"><span class="octicon octicon-link"></span></a>Hardware Setup</h1>
+<a name="hardware" class="anchor" href="#hardware"><span class="octicon octicon-link"></span></a>Hardware</h1>
+<img src="images/assembling.jpg" width=400 />
 
-<p>We're using the MCP3008 chip to convert analog measurements to digital.  The pins down one side of the chip are analog inputs; the other side connect to the computer.  The <a href="http://jeremyblythe.blogspot.com/2012/09/raspberry-pi-hardware-spi-analog-inputs.html">aforementioned blog post</a> has good pictures of which pins go to which Raspberry Pi connections.  The <a href="http://adafruit.com/products/1105">Pi T-Cobbler breakout board</a> from <a href="http://adafruit.com/">Adafruit</a> is a great help in connecting the Raspberry Pi to a breadboard.  Adafruit also sells the <a href="http://adafruit.com/products/856">MCP3008</a>.</p>
+<p>We're using the MCP3008 chip to convert analog measurements to digital.  The pins down one side of the chip are analog inputs; the other side connect to the computer.  The <a href="http://jeremyblythe.blogspot.com/2012/09/raspberry-pi-hardware-spi-analog-inputs.html">aforementioned blog post</a> has good pictures of which pins go to which Raspberry Pi connections. <a href="http://github.com/bergey/berrybasket/tree/master/adc board">Our schematic (below)</a> shows wiring up two ADC chips.  </p>
+
+<img src="https://raw.github.com/bergey/berrybasket/master/adc board/berrybasket adc schematic.svg" />
+
+<p>The <a href="http://adafruit.com/products/1105">Pi T-Cobbler breakout board</a> from <a href="http://adafruit.com/">Adafruit</a> is a great help in connecting the Raspberry Pi to a breadboard.  Adafruit also sells the <a href="http://adafruit.com/products/856">MCP3008</a>.</p>
+
+
 
 <h1>
-<a name="todo" class="anchor" href="#todo"><span class="octicon octicon-link"></span></a>TODO</h1>
+<a name="todo" class="anchor" href="#todo"><span class="octicon octicon-link"></span></a>Future Work</h1>
 
 <ul>
 <li>Allow measurement frequency to be specified in config file</li>
 <li>Specify channels to log in config file</li>
 <li>Add examples with specific sensors (thermistor, photoresistor)</li>
+<li>Add support for <a href="https://thingspeak.com/">Thingspeak</a></li>
+<li>Add support for <a href="http://www.nimbits.com/">Nimbits</a></li>
 </ul>
+
+<h1>
+<a name="classroom" class="anchor" href="#classroom"><span class="octicon octicon-link"></span></a>Educational Connections</h1>
+
       </section>
       <footer>
         <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
