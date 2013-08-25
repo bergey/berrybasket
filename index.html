@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Berrybasket by bergey</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Berrybasket</h1>
+        <p class="header">Open Hardware logging infrastructure (Raspberry Pi, Cosm, &amp; MCP3008)</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/bergey/berrybasket/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/bergey/berrybasket/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/bergey/berrybasket">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/bergey">bergey</a></p>
+
+
+      </header>
+      <section>
+        <p>Documentation for Raspberry Pi/MCP3008/Cosm datalogging project</p>
+
+<h1>
+<a name="install" class="anchor" href="#install"><span class="octicon octicon-link"></span></a>Install</h1>
+
+<ol>
+<li><p>Install <a href="http://learn.adafruit.com/adafruit-raspberry-pi-educational-linux-distro">Adafruit Occidentalis</a> 0.2 on Raspberry Pi</p></li>
+<li><p>Plug RasPi into router, log into router to find IP address, ssh into RasPi</p></li>
+<li>
+<p>Install python SPI library.  We learned to do this from <a href="http://jeremyblythe.blogspot.com/2012/09/raspberry-pi-hardware-spi-analog-inputs.html">this blog post</a></p>
+
+<pre><code>git clone git://github.com/doceme/py-spidev
+cd py-spidev
+sudo python setup.py install
+</code></pre>
+</li>
+<li>
+<p>Download and install python packages for the Cosm API</p>
+
+<pre><code>git clone git://github.com/petervizi/python-eeml
+</code></pre>
+</li>
+<li>
+<p>Download this script.</p>
+
+<pre><code>git clone git://github.com/bergey/berrybasket.git
+</code></pre>
+</li>
+<li>
+<p>Sign up for Cosm account, create a new feed, fill out config file:</p>
+
+<p>Fill in the blanks in config.json</p>
+</li>
+</ol><pre><code>- API_KEY
+
+- API_URL appears in the URL of the feed webpage.  It's the number in http://cosm.com/feeds/84597
+</code></pre>
+
+<h1>
+<a name="hardware-setup" class="anchor" href="#hardware-setup"><span class="octicon octicon-link"></span></a>Hardware Setup</h1>
+
+<p>We're using the MCP3008 chip to convert analog measurements to digital.  The pins down one side of the chip are analog inputs; the other side connect to the computer.  The <a href="http://jeremyblythe.blogspot.com/2012/09/raspberry-pi-hardware-spi-analog-inputs.html">aforementioned blog post</a> has good pictures of which pins go to which Raspberry Pi connections.  The <a href="http://adafruit.com/products/1105">Pi T-Cobbler breakout board</a> from <a href="http://adafruit.com/">Adafruit</a> is a great help in connecting the Raspberry Pi to a breadboard.  Adafruit also sells the <a href="http://adafruit.com/products/856">MCP3008</a>.</p>
+
+<h1>
+<a name="todo" class="anchor" href="#todo"><span class="octicon octicon-link"></span></a>TODO</h1>
+
+<ul>
+<li>Allow measurement frequency to be specified in config file</li>
+<li>Specify channels to log in config file</li>
+<li>Add examples with specific sensors (thermistor, photoresistor)</li>
+</ul>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
+  </body>
+</html>
