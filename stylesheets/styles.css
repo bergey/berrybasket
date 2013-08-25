@@ -151,8 +151,7 @@ img {
   margin: 0 auto;
   max-width: 650px;
   padding: 5px;
-  margin: 10px 0 32px 0;
-  border: 1px solid #ccc;
+  margin: 10px 10px 10px 0;
 }
 
 
@@ -230,6 +229,7 @@ header {
 
 p.header {
 	font-size: 16px;
+   margin-bottom: 22px;
 }
 
 h1.header {
