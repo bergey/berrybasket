@@ -35,6 +35,19 @@ if 'logfile' in config:
         logfile = open(logfilename, "wb")
         logwriter = csv.writer(logfile)
         logwriter.writerow(['Timestamp', 'Channel 0 (Celsius)'] + ['Channel ' + str(n) for n in xrange(1,16)])
+else:
+    logwriter = None
+
+# credentials to write to Thingspeak
+if 'thingspeak' in config:
+    import thingspeak
+    thing_channel_1 = thingspeak.channel(config['thingspeak']['write_key_1'])
+    if 'write_key_2' in config['thingspeak']:
+        thing_channel_2 = thingspeak.channel(config['thingspeak']['write_key_2'])
+    else:
+        thing_channel_2 = None
+else:
+    thing_channel_1 = None
 
 # adc_value range specific to MCP3008 (or 3004)
 def RfromMCP(adc_value, R0=10000):
@@ -119,5 +132,10 @@ if __name__=="__main__":
             for r in readings:
                 thermlog.append("{0:.1f}".format(r))
             logwriter.writerow(thermlog)
+
+        if thing_channel_1: # thingspeak.com
+            thing_channel_1.update(readings[:8])
+        if thing_channel_2:
+            thing_channel_2.update(readings[8:])
 
         time.sleep(10)
