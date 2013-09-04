@@ -62,30 +62,36 @@ If you find some part of this useful for any purpose, we'd love to hear about it
 <a name="software" class="anchor" href="#software"><span class="octicon octicon-link"></span></a>Software</h1>
 
 <ol>
-<li>Install <a href="http://learn.adafruit.com/adafruit-raspberry-pi-educational-linux-distro">Adafruit Occidentalis</a> 0.2 on your Raspberry Pi.</li>
-<li>Plug the RasPi into your router, log into the router to find its IP address, and ssh into RasPi.</li>
-<li>Install the python SPI library.  (Details from <a href="http://jeremyblythe.blogspot.com/2012/09/raspberry-pi-hardware-spi-analog-inputs.html">this blog post</a>):
-<pre><code>git clone git://github.com/doceme/py-spidev
-cd py-spidev
-sudo python setup.py install
-</code></pre>
-</li>
-<li>Download and install python packages for the Cosm API:
-  <pre><code>git clone git://github.com/petervizi/python-eeml
-</code></pre>
+  <li>Install <a href="http://learn.adafruit.com/adafruit-raspberry-pi-educational-linux-distro">Adafruit Occidentalis</a> 0.2 on your Raspberry Pi.</li>
+  <li>Plug the RasPi into your router, log into the router to find its IP address, and ssh into RasPi.</li>
+  <li>Install the python SPI library.  (Details from <a href="http://jeremyblythe.blogspot.com/2012/09/raspberry-pi-hardware-spi-analog-inputs.html">this blog post</a>):
+  <pre><code>git clone git://github.com/doceme/py-spidev
+  cd py-spidev
+  sudo python setup.py install
+  </code></pre>
+  </li>
+  <li>Download and install python packages for the online data store of your choice:
+  <ul>
+    <li>Cosm API:
+    <pre><code>git clone git://github.com/petervizi/python-eeml
+    </code></pre>
+    </li>
+    <li>Thingspeak:
+    <pre><code>pip install thingspeak</code></pre>
+  </ul>
 </li>
 <li>
   Download the berrybasket logging script:
   <pre><code>git clone git://github.com/bergey/berrybasket.git</code></pre>
 </li>
 <li>
-Sign up for Cosm account, create a new feed, fill in the blanks in config.json.  config.json has several sections, one for each supported online data aggregator, currently just "cosm", and one for the CSV, "logfile".  You can leave out any section that you don't plan to use.  For Cosm, the required fields are:
-<ul>
-  <li>API_KEY</li>
+  Sign up for Cosm account, create a new feed, fill in the blanks in config.json.  config.json has several sections, one for each supported online data aggregator, currently just "cosm", and one for the CSV, "logfile".  You can leave out any section that you don't plan to use.  For Cosm, the required fields are:
+  <ul>
+    <li>API_KEY</li>
 
-  <li>API_URL appears in the URL of the feed webpage.  It's the number in http://cosm.com/feeds/84597</li>
+    <li>API_URL appears in the URL of the feed webpage.  It's the number in http://cosm.com/feeds/84597</li>
 
-</ul></li></ol>
+  </ul></li></ol>
 
 <h1>
 <a name="hardware" class="anchor" href="#hardware"><span class="octicon octicon-link"></span></a>Hardware</h1>
@@ -151,7 +157,6 @@ Sign up for Cosm account, create a new feed, fill in the blanks in config.json. 
   <li>Allow measurement frequency to be specified in config file</li>
   <li>Specify channels to log in config file</li>
   <li>Add examples with specific sensors (thermistor, photoresistor)</li>
-  <li>Add support for <a href="https://thingspeak.com/">Thingspeak</a></li>
   <li>Add support for <a href="http://www.nimbits.com/">Nimbits</a></li>
   <li>Make it easier to use other sensors; Factor out thermistor-specific code.</li>
   <li>Make it easy to specify different sensors on different channels</li>
@@ -163,6 +168,7 @@ Sign up for Cosm account, create a new feed, fill in the blanks in config.json. 
 <p>Groups of 3 or 4 students decided whether their design goal was to stay warm or stay cool, and built a solar house tuned to that goal. Each house started with the same cardboard frame, with a hole to act as a window. Students added cups of dirt, water, or sand to store heat, one or more layers of plastic wrap over the window, and aluminum foil & black paper to cover the exterior. One house frame was left unmodified to act as a control.</p>
 <p>Visual representation and interpretation of data are key literacy skills. Using real data and computer graphing for this exercise encourages students to view their environment as something that they can model.</p>
 <p>Prior to designing their houses for the rooftop experiment, students performed more controlled experiments in the classroom, with electric lamps substituting for sunlight. They measured temperature and prepared graphs manually.</p>
+
       </section>
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
