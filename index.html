@@ -67,14 +67,12 @@ If you find some part of this useful for any purpose, we'd love to hear about it
   <li>Install the python SPI library.  (Details from <a href="http://jeremyblythe.blogspot.com/2012/09/raspberry-pi-hardware-spi-analog-inputs.html">this blog post</a>):
   <pre><code>git clone git://github.com/doceme/py-spidev
   cd py-spidev
-  sudo python setup.py install
-  </code></pre>
+  sudo python setup.py install</code></pre>
   </li>
   <li>Download and install python packages for the online data store of your choice:
   <ul>
     <li>Cosm API:
-    <pre><code>git clone git://github.com/petervizi/python-eeml
-    </code></pre>
+    <pre><code>git clone git://github.com/petervizi/python-eeml</code></pre>
     </li>
     <li>Thingspeak:
     <pre><code>pip install thingspeak</code></pre>
@@ -99,6 +97,8 @@ If you find some part of this useful for any purpose, we'd love to hear about it
 <img src="images/assembling.jpg" width=400 />
 
 <p>We're using the MCP3008 chip to convert analog measurements to digital.  The pins down one side of the chip are analog inputs; the other side connect to the computer.  The <a href="http://jeremyblythe.blogspot.com/2012/09/raspberry-pi-hardware-spi-analog-inputs.html">aforementioned blog post</a> has good pictures of which pins go to which Raspberry Pi connections. <a href="http://github.com/bergey/berrybasket/tree/master/adc board">Our schematic (below)</a> shows wiring up two ADC chips.  </p>
+
+<img src="images/berrybasket adc schematic.svg" width=300 />
 
 <table>
   <thead>
