@@ -4,7 +4,7 @@
 # using MCP3008 ADC and publish it to Cosm
 # Written by Daniel Bergey & Christalee Bieber
 
-import eeml, serial, time, datetime, csv, os
+import serial, time, datetime, os
 import spidev
 from math import log
 import json
@@ -19,6 +19,7 @@ config = json.loads(open('config.json').read())
 
 # Cosm credentials
 if 'cosm' in config:
+    import eeml
     API_KEY = config['cosm']['API_KEY']
     API_URL = config['cosm']['API_URL']
     pac = eeml.Cosm(API_URL, API_KEY)
@@ -27,6 +28,7 @@ else:
 
 # init local CSV logging
 if 'logfile' in config:
+    import csv
     logfilename = config['logfile']
     if os.path.exists(logfilename):
         logfile = open(logfilename, "ab")
