@@ -76,8 +76,8 @@ If you find some part of this useful for any purpose, we'd love to hear about it
 <a name="software" class="anchor" href="#software"><span class="octicon octicon-link"></span></a>Software</h1>
 
 <ol>
-  <li>Install <a href="http://learn.adafruit.com/adafruit-raspberry-pi-educational-linux-distro">Adafruit Occidentalis</a> 0.2 on your Raspberry Pi.</li>
-  <li>Plug the RasPi into your router, log into the router to find its IP address, and ssh into RasPi.</li>
+  <li>Install <a href="http://learn.adafruit.com/adafruit-raspberry-pi-educational-linux-distro">Adafruit Occidentalis</a> 0.2 on your Raspberry Pi.  If you prefer a different distro, make sure it has hardware SPI support.</li>
+  <li>Connect to your RasPi over ssh.  The easiest way is to plug the RasPi into the router with an ethernet cable, and run: <pre><code>ssh raspberrypi.local</code></pre>  Occidentalis makes itself known under that name.  If that doesn't work for some reason, you can log into the router and find the IP address; the most recently connected device is probably the RasPi.</li>
   <li>Install the python SPI library.  (Details from <a href="http://jeremyblythe.blogspot.com/2012/09/raspberry-pi-hardware-spi-analog-inputs.html">this blog post</a>):
   <pre><code>git clone git://github.com/doceme/py-spidev
   cd py-spidev
