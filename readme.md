@@ -1,5 +1,9 @@
 Documentation for Raspberry Pi/MCP3008/Cosm datalogging project
 
+This project is not actively developed or maintained.  I'm happy to
+answer questions, and I'll try to reply to issues.  Otherwise, I won't
+notice if things have stopped working.
+
 # Install
 
 1. Install [Adafruit Occidentalis](http://learn.adafruit.com/adafruit-raspberry-pi-educational-linux-distro) 0.2 on Raspberry Pi
